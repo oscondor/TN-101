@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python main.py)",
+      "Bash(python3 main.py)",
+      "Bash(where python3:*)",
+      "Bash(where python:*)",
+      "Bash(where py:*)",
+      "Bash(py -3 \"C:/Users/ovior/OneDrive/Bureau/ICFP/Stage/TN 101/main.py\")",
+      "Bash(where conda:*)",
+      "Bash(where mamba:*)",
+      "Bash(/c/Users/ovior/AppData/Local/Programs/anaconda3/python.exe \"C:/Users/ovior/OneDrive/Bureau/ICFP/Stage/TN 101/main.py\")",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\ovior\\\\AppData\\\\Local\\\\Programs\\\\anaconda3 /b\")",
+      "Bash(cmd /c \"where anaconda 2>&1 & conda info --base 2>&1\")",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\ovior /b\")",
+      "Bash(\"C:/Users/ovior/AppData/Local/Programs/Python/Python313/python.exe\" \"C:/Users/ovior/OneDrive/Bureau/ICFP/Stage/TN 101/main.py\")",
+      "Bash(\"C:/Users/ovior/AppData/Local/Programs/Python/Python313/python.exe\" -m pip install numpy)",
+      "Bash(\"C:/Users/ovior/AppData/Local/Programs/Python/Python313/python.exe\" -)",
+      "Bash(2>&1)",
+      "PowerShell($env_path = \"C:\\\\Users\\\\ovior\\\\OneDrive\\\\Bureau\\\\ICFP\\\\Stage\\\\TN 101\\\\.conda\"; cmd /c \"conda install -p `\"$env_path`\" pytest -y\" 2>&1 | Select-Object -Last 5)"
+    ]
+  }
+}
