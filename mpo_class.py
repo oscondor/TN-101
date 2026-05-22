@@ -150,9 +150,6 @@ class MPO:
             result.sweep_left(tol)   # compress right → left
         return result
 
-    # ------------------------------------------------------------------
-    # Expectation value  <ψ|O|ψ>
-    # ------------------------------------------------------------------
 
     def expectation_value(self, mps_canonical):
         """
