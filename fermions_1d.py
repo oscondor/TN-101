@@ -71,7 +71,7 @@ def TB_hamiltonian_interaction(h, n_sites,tol):
     return H
 
 
-def random_mps(n_sites, d=2, chi_max=32):
+def random_mps(n_sites,chi_max, d=2):
     """MPS left-canonical aléatoire : isométries QR pour les n-1 premiers sites, dernier core normalisé."""
     def bond_dims(i):
         chi_l = max(min(chi_max, d ** i,       d ** (n_sites - i)),     1) #pour assurer que les dimensions de lien sont au moins 1 et ne dépassent pas d^i ou d^(n-i) ou chi_max
@@ -92,10 +92,30 @@ def random_mps(n_sites, d=2, chi_max=32):
 
     return mps_class.MPS_Canonical(cores)
 
+def correlator(mps, i, j):
+    if i<j :
+        mps.shift_center(i, None)
+        c_i_dag = cdag_fermions(i, mps.n_sites)
+        c_j     = c_fermions(j, mps.n_sites)
+        op = c_i_dag.multiply(c_j)
+        return op.expectation_value(mps)
+    else:
+        return np.conjugate(correlator(mps, j, i))
+
+
+def correlation_matrix(mps):
+    n_sites = mps.n_sites
+    C = np.zeros((n_sites, n_sites), dtype=complex)
+    for i in range(n_sites):
+        for j in range(i, n_sites):
+            C[i, j] = correlator(mps, i, j)
+            if i != j:
+                C[j, i] = np.conjugate(C[i, j])
+    return C
 
 if __name__ == "__main__":
 
-    n_sites = 50
+    n_sites = 10
     h = np.random.rand(n_sites, n_sites)  # Matrice de hopping aléatoire pour 10 sites
     hsym = (h + h.T) / 2  # Rendre la matrice hermitienne
     print(hsym.shape)
@@ -114,7 +134,7 @@ if __name__ == "__main__":
     mpo = TB_hamiltonian_interaction(hsym,n_sites,tol=20)
    
     np.random.seed(42)
-    mps_init = random_mps(n_sites, d=2, chi_max=chi_max)   
+    mps_init = random_mps(n_sites, chi_max=chi_max, d=2)   
     print("\nDMRG (sweep par sweep) :")
     E0 = mpo.expectation_value(mps_init)
     print(f"  Sweep  0 : E = {E0:.10f}")
